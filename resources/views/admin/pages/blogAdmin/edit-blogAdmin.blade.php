@@ -19,6 +19,11 @@
                             <form class="p-2" action="{{ route('update.admin') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" value="{{ $heads->id }}" name="id">
+
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="">Image</label>--}}
+{{--                                    <input type="file" name="image" class="form-control" id="img" accept="image/*">--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="">Name</label>
                                     <input type="text" value="{{ $heads->name }}" name="name" class="form-control p-4" required="required"/>
@@ -48,6 +53,8 @@
                                             type="submit">Save</button>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>

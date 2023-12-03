@@ -30,7 +30,7 @@
                                 <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
                                     <div class="d-flex align-items-center">
                                         <img class="rounded-circle mr-2" src="{{ asset('front-assets') }}/img/user.jpg" width="25" height="25" alt="">
-                                        <small>John Doe</small>
+                                        <small>{{ Auth::user()->name }}</small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <small class="ml-3"><i class="far fa-eye mr-2"></i>
@@ -95,173 +95,25 @@
                         <div class="section-title mb-0">
                             <h4 class="m-0 text-uppercase font-weight-bold">Popular News</h4>
                         </div>
+                        @php
+                            $oneMonthAgo = now()->subMonth(); // Assuming you want to get posts from one month ago
+                        @endphp
                         <div class="bg-white border border-top-0 p-3">
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-1.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-2.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-3.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-4.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-5.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
+                            <div class="bg-white border border-top-0 p-3">
+                                @foreach($popularPosts->where('created_at', '>=', $oneMonthAgo) as $post)
+                                    <x-post.popular :post="$post"/>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                     <!-- Social Follow End -->
 
                     <!-- Ads Start -->
-                    @if($advertisement->advertisementStatus == 1)
-                    <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Advertisement</h4>
-                        </div>
-                        <div class="bg-white text-center border border-top-0 p-3">
-                            <a href="{{ $advertisement->link }}"><img class="img-fluid" src="{{ asset($advertisement->image) }}" alt=""></a>
-                        </div>
-                    </div>
+                    @if($homeSetting->advertisementStatus == 1)
+                        <x-post.advertisement :homeSetting="$homeSetting"/>
                     @endif
                     <!-- Ads End -->
 
-                    <!-- Tranding News Start -->
-                    <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Tranding News</h4>
-                        </div>
-                        <div class="bg-white border border-top-0 p-3">
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-1.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-2.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-3.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-4.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img class="img-fluid" src="{{ asset('front-assets') }}/img/news-110x110-5.jpg" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                                        <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum dolor sit amet elit...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Popular News End -->
-
-                    <!-- Newsletter Start -->
-{{--                    <div class="mb-3">--}}
-{{--                        <div class="section-title mb-0">--}}
-{{--                            <h4 class="m-0 text-uppercase font-weight-bold">Newsletter</h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="bg-white text-center border border-top-0 p-3">--}}
-{{--                            <p>Aliqu justo et labore at eirmod justo sea erat diam dolor diam vero kasd</p>--}}
-{{--                            <div class="input-group mb-2" style="width: 100%;">--}}
-{{--                                <input type="text" class="form-control form-control-lg" placeholder="Your Email">--}}
-{{--                                <div class="input-group-append">--}}
-{{--                                    <button class="btn btn-primary font-weight-bold px-3">Sign Up</button>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <small>Lorem ipsum dolor sit amet elit</small>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!-- Newsletter End -->
-
-                    <!-- Tags Start -->
-{{--                    <div class="mb-3">--}}
-{{--                        <div class="section-title mb-0">--}}
-{{--                            <h4 class="m-0 text-uppercase font-weight-bold">Tags</h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="bg-white border border-top-0 p-3">--}}
-{{--                            <div class="d-flex flex-wrap m-n1">--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Politics</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Business</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Corporate</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Business</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Health</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Education</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Science</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Business</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Foods</a>--}}
-{{--                                <a href="" class="btn btn-sm btn-outline-secondary m-1">Travel</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!-- Tags End -->
                 </div>
             </div>
         </div>

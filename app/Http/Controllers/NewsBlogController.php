@@ -77,7 +77,11 @@ class NewsBlogController extends Controller
     public function single_page($slug){
         $blog = Blog::where('slug', $slug)->with('comments')->first();
 
-
+        $SimilarPosts= Blog::where('status', 1)
+            ->where('category_id',$blog->category_id)
+            ->where('id', '!=', $blog->id)
+            ->take(5)
+            ->get();
 
         $view = $blog->id;
         $update = ['count'=>$blog->count+1,];
@@ -87,10 +91,13 @@ class NewsBlogController extends Controller
             ->where('blog_id', $blog->id)
             ->get();
 
-        return view('front.pages.single-page',compact('blog','comments'),[
+        return view('front.pages.single-page',compact('comments','SimilarPosts'),[
+            'breakingNews' => Blog::where('status', 1)->orderBy('created_at', 'desc')->get(),
             'categories' => Category::where('status', 1)->get(),
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
+            'blogs' => $blog,
+            'homeSetting' => Widget::find(1),
         ]);
     }
 
@@ -128,19 +135,17 @@ class NewsBlogController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        $popularPosts = Blog::orderBy('count', 'desc')->limit(5)->get();
 
 
         return view('front.pages.category', [
             'categories' => Category::where('status', 1)->get(),
             'category' => $category,
-            'advertisement' => Widget::find(1),
-//            'blogs1' => $blogs1,
-//            'blogs2' => $blogs2,
-//            'blogs3' => $blogs3,
+            'homeSetting' => Widget::find(1),
             'blogs' => $blogs,
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
-
+            'popularPosts'=>$popularPosts,
         ]);
     }
 

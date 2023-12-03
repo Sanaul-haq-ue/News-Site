@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function manage_admin(){
         return view('admin.pages.blogAdmin.manage-blogAdmin',[
-            'heads'=>User::all()
+            'heads'=>User::find(1)->first(),
         ]);
     }
 
@@ -54,5 +54,7 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Old password is incorrect');
         }
     }
+
+
 
 }

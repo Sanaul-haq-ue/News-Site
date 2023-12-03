@@ -65,8 +65,7 @@
                                             <select name="blog_type" class="form-control">
                                                 <option value="">Select BLog Type</option>
                                                 <option value="Breaking-News">Breking News</option>
-                                                <option value="popular">Popular</option>
-                                                <option value="latest">Latest</option>
+                                                <option value="tranding">Tranding</option>
                                             </select>
                                         </div>
                                     </div>
