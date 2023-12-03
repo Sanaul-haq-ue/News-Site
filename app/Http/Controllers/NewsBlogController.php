@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\ContactBody;
 use App\Models\H_F_Wiget;
 use App\Models\Post;
 use App\Models\Widget;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function Nette\Utils\first;
 use Livewire\WithPagination;
 use function Spatie\Ignition\ErrorPage\title;
+use Carbon\Carbon;
 
 class NewsBlogController extends Controller
 {
@@ -22,8 +25,13 @@ class NewsBlogController extends Controller
     public function index(){
 
         $category = Widget::find(1);
+
         $category1 = $category->firstCategory;
-        $category1posts = Category::where('id', $category1)->where('status',1)->with('blog')->orderBy('created_at', 'desc')->first();
+        $category1posts = Category::where('id', $category1)
+            ->where('status',1)
+            ->with('blog')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         $category2 = $category->secondCategory;
         $category2posts = Category::where('id', $category2)->where('status',1)->with('blog')->orderBy('created_at', 'desc')->first();
@@ -33,6 +41,14 @@ class NewsBlogController extends Controller
 
         $category4 = $category->fourCategory;
         $category4posts = Category::where('id', $category4)->where('status',1)->with('blog')->orderBy('created_at', 'desc')->first();
+
+        $oneMonthAgo = Carbon::now()->subMonth();
+
+        $popularPosts = Blog::where('created_at', '>=', $oneMonthAgo)
+            ->orderBy('count', 'desc')
+            ->limit(5)
+            ->get();
+
 
         return view('front.pages.home',[
             'blogs' => Blog::where('status', 1)->orderBy('created_at', 'desc')->get(),
@@ -45,6 +61,7 @@ class NewsBlogController extends Controller
             'category4posts'=>$category4posts,
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
+            'popularPosts' => $popularPosts,
         ]);
     }
 
@@ -58,14 +75,27 @@ class NewsBlogController extends Controller
     }
 
     public function single_page($slug){
-        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $blog = Blog::where('slug', $slug)->with('comments')->first();
 
-        return view('front.pages.single-page',compact('blog'),[
+
+
+        $view = $blog->id;
+        $update = ['count'=>$blog->count+1,];
+        Blog::where('id',$view)->update($update);
+
+        $comments = Comment::with('visitor')
+            ->where('blog_id', $blog->id)
+            ->get();
+
+        return view('front.pages.single-page',compact('blog','comments'),[
             'categories' => Category::where('status', 1)->get(),
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
         ]);
     }
+
+
+
 
 //    public function category($slug){
 //        $category = Category::where('slug', $slug)->first();
@@ -81,10 +111,10 @@ class NewsBlogController extends Controller
 //        ]);
 //    }
 
-    public function category($slug)
+    public function category($categorySlug)
     {
 
-        $category = Category::where('slug', $slug)->first();
+        $category = Category::where('slug', $categorySlug)->first();
 
         // Check if the category exists
         if (!$category) {

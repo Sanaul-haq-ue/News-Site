@@ -15,8 +15,14 @@
             <span class="text-gray-500 text-sm">{{ $post->getReadingTime() }} min read<span/>
         </div>
         <div class="d-flex align-items-end">
-            <small class="ml-3"><i class="far fa-eye mr-2"></i>12345</small>
-            <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small>
+            <small class="ml-3"><i class="far fa-eye mr-2"></i>
+                @if(!empty( $post->count ))
+                    {{ $post->count }}
+                @else
+                    0
+                @endif
+            </small>
+            <small class="ml-3"><i class="far fa-comment mr-2"></i>{{ $post->comments->count() ?? 0 }}</small>
         </div>
     </div>
 </div>

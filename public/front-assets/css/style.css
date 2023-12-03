@@ -9675,3 +9675,8 @@ h6,
   padding: 0;
   list-style-type: none;
 }
+
+.bg-register-image{
+    background-image: url('{{ asset('front-assets/img/news-110x110-1.jpg') }}');
+
+}

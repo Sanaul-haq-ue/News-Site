@@ -10,9 +10,21 @@
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link text-body small" href="{{ route('contact') }}">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body small" href="#">Login</a>
-                    </li>
+                @if(session()->has('visitorId'))
+                    <!-- If the user is logged in, show the Logout link -->
+                        <li class="nav-item">
+                            <a class="nav-link text-body small" href="{{ route('visitor.logout') }}">Logout</a>
+                        </li>
+                @else
+                    <!-- If the user is not logged in, show the Login and Register links -->
+                        <li class="nav-item border-right border-secondary">
+                            <a class="nav-link text-body small" href="{{ route('visitor.login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body small" href="{{ route('visitor.registration') }}">Register</a>
+                        </li>
+                    @endif
+
                 </ul>
             </nav>
         </div>

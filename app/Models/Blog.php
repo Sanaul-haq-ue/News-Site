@@ -78,6 +78,11 @@ class Blog extends Model
         return ($min < 1) ? 1 : $min;
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
 
 }

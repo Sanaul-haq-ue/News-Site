@@ -29,6 +29,8 @@ return new class extends Migration
 
             $table->string('status')->default(1)->comment('1: Published, 0: Unpublished');
 
+            $table->longText('count')->nullable();
+
             $table->timestamps();
         });
     }
