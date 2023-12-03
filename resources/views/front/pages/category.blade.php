@@ -33,8 +33,14 @@
                                         <small>John Doe</small>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <small class="ml-3"><i class="far fa-eye mr-2"></i>12345</small>
-                                        <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small>
+                                        <small class="ml-3"><i class="far fa-eye mr-2"></i>
+                                            @if(!empty( $blog->count ))
+                                                {{ $blog->count }}
+                                            @else
+                                                0
+                                            @endif
+                                        </small>
+                                        <small class="ml-3"><i class="far fa-comment mr-2"></i>{{ $blog->comments->count() ?? 0 }}</small>
                                     </div>
                                 </div>
                             </div>

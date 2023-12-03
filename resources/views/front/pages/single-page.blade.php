@@ -56,7 +56,7 @@
                                             0
                                         @endif
                                     </i></span>
-                                <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
+                                <span class="ml-3"><i class="far fa-comment mr-2"></i>{{ $blog->comments->count() ?? 0 }}</span>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                     <!-- Comment List Start -->
                     <div class="mb-3">
                         <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">{{ $blog->comments->count() ?? 0 }} Comment</h4>
+                            <h4 class="m-0 text-uppercase font-weight-bold">Comment</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-4">
                             @foreach($comments as $comment)
