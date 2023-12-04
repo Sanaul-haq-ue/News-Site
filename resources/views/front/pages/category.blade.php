@@ -29,8 +29,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
                                     <div class="d-flex align-items-center">
-                                        <img class="rounded-circle mr-2" src="{{ asset('front-assets') }}/img/user.jpg" width="25" height="25" alt="">
-                                        <small>{{ Auth::user()->name }}</small>
+                                        <span class="text-gray-500 text-sm">{{ $blog->getReadingTime() }} min read<span/>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <small class="ml-3"><i class="far fa-eye mr-2"></i>
@@ -106,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Social Follow End -->
+                    <!-- Popular News End -->
 
                     <!-- Ads Start -->
                     @if($homeSetting->advertisementStatus == 1)

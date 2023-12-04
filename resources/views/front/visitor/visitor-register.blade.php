@@ -8,7 +8,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image">
-                        <img src="{{ asset('front-assets/img/news-110x110-1.jpg') }}" alt="">
+                        <img src="{{ asset('front-assets/img/asdf.jpg') }}" alt="" width="100%" height="100%">
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">

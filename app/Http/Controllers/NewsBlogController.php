@@ -66,10 +66,13 @@ class NewsBlogController extends Controller
     }
 
     public function contact(){
+        $popularPosts = Blog::orderBy('count', 'desc')->get();
+
         return view('front.pages.contact',[
             'categories' => Category::where('status', 1)->get(),
             'contact_body' => ContactBody::find(1)->first(),
             'headerSetting' => H_F_Wiget::find(1)->first(),
+            'popularPosts'=>$popularPosts,
         ]);
 
     }
@@ -82,6 +85,8 @@ class NewsBlogController extends Controller
             ->where('id', '!=', $blog->id)
             ->take(5)
             ->get();
+
+        $popularPosts = Blog::orderBy('count', 'desc')->get();
 
         $view = $blog->id;
         $update = ['count'=>$blog->count+1,];
@@ -98,29 +103,13 @@ class NewsBlogController extends Controller
             'contact_body' => ContactBody::find(1)->first(),
             'blogs' => $blog,
             'homeSetting' => Widget::find(1),
+            'popularPosts'=>$popularPosts,
         ]);
     }
 
 
-
-
-//    public function category($slug){
-//        $category = Category::where('slug', $slug)->first();
-//        $blogs = $category->id;
-//
-//        $specificSlug = 'gdfg'; // Replace this with the specific slug you want to use
-//        $url = route('category', ['slug' => $specificSlug]);
-//
-//        return view('front.pages.category',[
-//            'categories' => Category::where('status', 1)->get(),
-//            'category' => Category::where('slug', $slug)->first(),
-//            'blogs' => Blog::where('category_id' , $blogs)->orderBy('created_at', 'desc')->take(4)->first(),
-//        ]);
-//    }
-
     public function category($categorySlug)
     {
-
         $category = Category::where('slug', $categorySlug)->first();
 
         // Check if the category exists
@@ -128,9 +117,6 @@ class NewsBlogController extends Controller
             abort(404); // or handle the case where the category is not found
         }
 
-//        $blogs1 = Blog::where('category_id', $category->id)->orderBy('created_at', 'desc')->take(4)->get();
-//        $blogs2 = Blog::where('category_id', $category->id)->orderBy('created_at', 'desc')->skip(4)->take(4)->get();
-//        $blogs3 = Blog::where('category_id', $category->id)->orderBy('created_at', 'desc')->skip(8)->take(2)->get();
         $blogs = Blog::where('category_id', $category->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);

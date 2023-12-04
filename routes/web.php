@@ -31,16 +31,11 @@ Route::group(['middleware'=>'visitor'],function (){
     Route::post('/new-comment',[CommentController::class,'newComment'])->name('new.comment');
 });
 
-
-
-
 Route::get('/visitor-registration',[VisitorController::class,'visitor_registration'])->name('visitor.registration');
 Route::post('/new-visitor',[VisitorController::class,'saveVisitor'])->name('new.visitor');
 Route::get('/visitor-logout',[VisitorController::class,'logoutVisitor'])->name('visitor.logout');
 Route::get('/visitor-login',[VisitorController::class,'loginVisitor'])->name('visitor.login');
 Route::post('/check-login',[VisitorController::class,'checkVisitor'])->name('check.visitor');
-
-
 
 //Route::get('/', function () {return view('welcome');});
 

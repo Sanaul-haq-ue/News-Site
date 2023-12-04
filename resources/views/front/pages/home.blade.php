@@ -184,7 +184,7 @@
                                                 <a class="text-body" href=""><small>{{ $blog->date }}</small></a>
                                             </div>
                                             <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('single.page',['slug'=>$blog->slug]) }}">
-                                                {{ substr($blog->title,0,28) }}...
+                                                {{ substr($blog->title,0,20) }}...
                                             </a>
                                         </div>
                                     </div>

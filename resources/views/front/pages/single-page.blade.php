@@ -52,7 +52,7 @@
                         </div>
                         <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle mr-2" src="{{ asset('front-assets') }}/img/user.jpg" width="25" height="25" alt="">
+                                <img class="rounded-circle mr-2" src="{{ asset('front-assets')}}/img/undraw_profile.svg" width="25" height="25" alt="">
                                 <span>{{ Auth::user()->name }}</span>
                             </div>
                             <div class="d-flex align-items-center">
@@ -116,10 +116,9 @@
                                 </div>
                             </form>
                             @else
-                                <h3 class="text-center text-success">Please &nbsp;&nbsp;
-                                    <a href="{{ route('visitor.login') }}" class="btn btn-outline-success">Login</a>
-                                    &nbsp;&nbsp; for comment...
-                                </h3>
+                                    <a href="{{ route('visitor.login') }}" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                                        Login to comment
+                                    </a>&nbsp;&nbsp
                             @endif
                         </div>
                     </div>
@@ -133,7 +132,7 @@
                     @endif
                     <!-- Ads End -->
 
-                    <!-- Tranding News Start -->
+                    <!-- Similar News Start -->
                     <div class="mb-3">
                         <div class="section-title mb-0">
                             <h4 class="m-0 text-uppercase font-weight-bold">Similar News</h4>
@@ -148,14 +147,14 @@
                                         <a class="text-body" href=""><small>{{ $post->date }}</small></a>
                                     </div>
                                     <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('single.page',['slug'=>$post->slug]) }}">
-                                        {{ substr($post->title,0,28) }}...
+                                        {{ substr($post->title,0,20) }}...
                                     </a>
                                 </div>
                             </div>
                             @endforeach
                         </div>
                     </div>
-                    <!-- Tranding News End -->
+                    <!-- Similar News End -->
 
                 </div>
             </div>

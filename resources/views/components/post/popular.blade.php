@@ -6,6 +6,6 @@
             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{$post->category->category_name}}</a>
             <a class="text-body" href=""><small>{{ $post->date }}</small></a>
         </div>
-        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('single.page',['slug'=>$post->slug]) }}">{{ substr($post->title,0,28) }}...</a>
+        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('single.page',['slug'=>$post->slug]) }}">{{ substr($post->title,0,20) }}...</a>
     </div>
 </div>

@@ -26,27 +26,18 @@
         </div>
         <div class="col-lg-4 col-md-4 mb-5">
             <h5 class="mb-4 text-white text-uppercase font-weight-bold">Popular News</h5>
+            @foreach($popularPosts->take(3) as $post)
             <div class="mb-3">
                 <div class="mb-2">
-                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
+                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{$post->category->category_name}}</a>
+                    <a class="text-body" href=""><small>{{ $post->date }}</small></a>
                 </div>
-                <a class="small text-body text-uppercase font-weight-medium" href="">Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a>
+                <a class="small text-body text-uppercase font-weight-medium" href="{{ route('single.page',['slug'=>$post->slug]) }}">
+                    {{ substr($post->title,0,40) }}...
+                </a>
             </div>
-            <div class="mb-3">
-                <div class="mb-2">
-                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                </div>
-                <a class="small text-body text-uppercase font-weight-medium" href="">Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a>
-            </div>
-            <div class="">
-                <div class="mb-2">
-                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">Business</a>
-                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                </div>
-                <a class="small text-body text-uppercase font-weight-medium" href="">Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a>
-            </div>
+            @endforeach
+
         </div>
         <div class="col-lg-4 col-md-4 mb-5">
             <h5 class="mb-4 text-white text-uppercase font-weight-bold">Categories</h5>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\ContactBody;
 use App\Models\H_F_Wiget;
@@ -12,16 +13,20 @@ use Illuminate\Support\Facades\Validator;
 use Session;
 use function Ramsey\Collection\Map\put;
 
+
 class VisitorController extends Controller
 {
     private static $visitorInfo,$visitorOldPass;
 
 
     public function visitor_registration(){
+        $popularPosts = Blog::orderBy('count', 'desc')->get();
+
         return view('front.visitor.visitor-register',[
             'categories' => Category::where('status', 1)->get(),
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
+            'popularPosts'=>$popularPosts,
         ]);
     }
 
@@ -47,10 +52,13 @@ class VisitorController extends Controller
     }
 
     public function loginVisitor(){
+        $popularPosts = Blog::orderBy('count', 'desc')->get();
+
         return view('front.visitor.visitor-login', [
             'categories' => Category::where('status', 1)->get(),
             'headerSetting' => H_F_Wiget::find(1)->first(),
             'contact_body' => ContactBody::find(1)->first(),
+            'popularPosts'=>$popularPosts,
         ]);
     }
 
