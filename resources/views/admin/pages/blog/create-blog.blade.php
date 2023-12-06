@@ -28,7 +28,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="form-label mt-2" id="slug">Category</label>
-                                            <select name="category_id" id="category" class="form-control">
+                                            <select name="category_id" id="category" class="form-control" required="required">
                                                 <option value="">Select Category</option>
                                                 @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
